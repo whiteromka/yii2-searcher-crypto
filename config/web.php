@@ -15,12 +15,12 @@ if (file_exists($paramsLocal)) {
 
 $config = [
     'id' => 'basic',
-    'language'=>'ru',
+    'language' => 'ru',
     'basePath' => dirname(__DIR__),
     'bootstrap' => ['log'],
     'aliases' => [
         '@bower' => '@vendor/bower-asset',
-        '@npm'   => '@vendor/npm-asset',
+        '@npm' => '@vendor/npm-asset',
     ],
     'modules' => [
         'shop' => [
@@ -43,6 +43,9 @@ $config = [
         'request' => [
             'cookieValidationKey' => 'qPOGnNCZjuFkEmsxlRfZJDnReyBC_hgs',
             'baseUrl' => '',
+            'parsers' => [
+                'application/json' => 'yii\web\JsonParser',
+            ]
         ],
         'cache' => [
             'class' => 'yii\caching\FileCache',
@@ -50,7 +53,7 @@ $config = [
         'user' => [
             'identityClass' => 'app\models\User',
             'enableAutoLogin' => true,
-            'loginUrl'=> '/auth/login',
+            'loginUrl' => '/auth/login',
         ],
         'errorHandler' => [
             'errorAction' => 'site/error',
@@ -80,16 +83,28 @@ $config = [
         'urlManager' => [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
+            'enableStrictParsing' => false,
             'rules' => [
-                # Главная
-                '/' => '/user/filter',
-
-                # Тестовые
+                '/' => 'user/filter',
                 't/t' => 't/t',
                 't' => 't/index',
-
-                # Магазин
                 'shop/category/<catId:\d+>' => 'shop/category/category',
+                # REST API
+                [
+                    'class' => 'yii\rest\UrlRule',
+                    'controller' => [
+                        'api/auth',
+                        'api/user',
+                    ],
+                    'prefix' => 'api',
+                ],
+                # Получение токенов
+                'POST api/auth/login' => 'api/auth/login',
+                'POST api/auth/logout' => 'api/auth/logout',
+                # Пользователи
+                'GET api/user' => 'api/user/index',
+                'GET api/user/<id:\d+>' => 'api/user/view',
+                'POST api/user/create' => 'api/user/create',
             ],
         ],
 

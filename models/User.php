@@ -78,6 +78,20 @@ class User extends BaseActiveRecord implements IdentityInterface
     }
 
     /**
+     * {@inheritdoc}
+     */
+    public function fields()
+    {
+        $fields = parent::fields();
+        unset(
+            $fields['password_hash'],
+            $fields['access_token'],
+            $fields['auth_key']
+        );
+        return $fields;
+    }
+
+    /**
      * @return UserQuery|ActiveQuery
      */
     public static function find()
@@ -239,11 +253,43 @@ class User extends BaseActiveRecord implements IdentityInterface
     }
 
     /**
+     * Валидация пароля
+     *
      * @param string $password
      * @return bool
      */
     public function checkPassword(string $password): bool
     {
         return Yii::$app->security->validatePassword($password, $this->password_hash);
+    }
+
+    /**
+     * Генерация хеша пароля
+     */
+    public function setPassword($password)
+    {
+        $this->password_hash = Yii::$app->security->generatePasswordHash($password);
+    }
+
+    /**
+     * Генерация auth token
+     */
+    public function generateAuthToken(): string
+    {
+        $token = Yii::$app->security->generateRandomString(32);
+        $this->access_token = $token;
+        $this->save();
+        return $token;
+    }
+
+    /**
+     * Получить токен или сгенерировать его
+     */
+    public function getAuthTokenOrGenerate(): string
+    {
+        if (!$this->access_token) {
+            return $this->generateAuthToken();
+        }
+        return $this->access_token;
     }
 }
