@@ -6,16 +6,16 @@ use yii\rest\ActiveController;
 use yii\filters\auth\HttpBearerAuth;
 
 /**
- * GET .../api/user?page=10&per-page=100
- * GET .../api/user/1
- * POST .../api/user/create
- * PUT .../api/user/update
- * PATCH .../api/user/update
- * DELETE .../api/user/delete/1
+ * GET .../api/altcoin?page=10&per-page=100
+ * GET .../api/altcoin/1
+ * POST .../api/altcoin/create
+ * PUT .../api/altcoin/update
+ * PATCH .../api/altcoin/update
+ * DELETE .../api/altcoin/delete/1
  */
-class UserController extends ActiveController
+class AltcoinController extends ActiveController
 {
-    public $modelClass = 'app\models\api\User';
+    public $modelClass = 'app\models\api\Altcoin';
 
     public function behaviors()
     {

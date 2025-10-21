@@ -102,9 +102,19 @@ $config = [
                 'POST api/auth/login' => 'api/auth/login',
                 'POST api/auth/logout' => 'api/auth/logout',
                 # Пользователи
-                'GET api/user' => 'api/user/index',
+                'GET api/user' => 'api/user/index', // ?page=10&per-page=100
                 'GET api/user/<id:\d+>' => 'api/user/view',
                 'POST api/user/create' => 'api/user/create',
+                'PUT api/user/update/<id:\d+>' =>'api/user/update',
+                'PATCH api/user/update/<id:\d+>' =>'api/user/update',
+                'DELETE api/user/delete/<id:\d+>' => 'api/user/delete',
+                'OPTIONS api/user/options' => 'api/user/options',
+                # Крипта
+                'GET api/altcoin' => 'api/altcoin/index',
+                'GET api/altcoin/<id:\d+>' => 'api/altcoin/view',
+                'POST api/altcoin/create' => 'api/altcoin/create',
+                'PUT api/altcoin/update/<id:\d+>' =>'api/altcoin/update',
+                'DELETE api/altcoin/delete/<id:\d+>' => 'api/altcoin/delete',
             ],
         ],
 

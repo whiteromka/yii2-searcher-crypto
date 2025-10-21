@@ -77,19 +77,6 @@ class User extends BaseActiveRecord implements IdentityInterface
         ];
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function fields()
-    {
-        $fields = parent::fields();
-        unset(
-            $fields['password_hash'],
-            $fields['access_token'],
-            $fields['auth_key']
-        );
-        return $fields;
-    }
 
     /**
      * @return UserQuery|ActiveQuery
