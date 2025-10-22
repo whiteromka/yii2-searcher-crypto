@@ -25,7 +25,7 @@ class User extends \app\models\User
             case self::SCENARIO_FULL:
                 $fields['passport'] = fn() => $this->passport;
                 $fields['estate'] = fn() => $this->estate;
-                $fields['fullAge'] = fn() => $this->fullAge;
+                $fields['full_age'] = fn() => $this->fullAge;
                 break;
 
             case self::SCENARIO_WITH_ESTATE:

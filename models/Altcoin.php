@@ -22,6 +22,7 @@ use yii\helpers\ArrayHelper;
  * @property string|null $updated_at
  *
  * @property AltcoinWatcher[] $altcoinWatchers
+ * @property AltcoinHistoryData $altcoinLastData
  */
 class Altcoin extends ActiveRecord
 {
@@ -90,6 +91,14 @@ class Altcoin extends ActiveRecord
     public function getAltcoinWatchers()
     {
         return $this->hasMany(AltcoinWatcher::class, ['altcoin_id' => 'id']);
+    }
+
+    /**
+     * @return ActiveQuery
+     */
+    public function getAltcoinLastData()
+    {
+        return $this->hasOne(AltcoinHistoryData::class, ['altcoin_id' => 'id'])->orderBy(['altcoin_date_id' => SORT_DESC]);
     }
 
     /**
